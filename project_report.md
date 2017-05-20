@@ -91,7 +91,7 @@ The following figure illustrates the multiple detections and false positives, an
 
 ## Visualization and Video Implementation
 
-The following image shown a single frame from the visualization video. The visualization frame projects all key steps of the processing as described above. Feature detection using HoG, multiple detection, heat maps processing and final identification of bounding box for multiple cars is visualized in a single frame.
+The following image shown a single frame from the visualization video. The visualization frame projects all key steps of the processing as described above. Feature detection using HoG, multiple detection, heat maps processing and final identification of bounding box for multiple cars is visualized in a single frame. The final project video can be download from [here](./project_output.mp4).
 
 
 ![visualization](./writeup_media/visualization.png)
