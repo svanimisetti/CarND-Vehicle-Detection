@@ -73,7 +73,7 @@ The sliding window search methodology used to identify cars in each frame of the
 ![sliding_windows](./writeup_media/sliding_windows.png)
 
 
-###Heat Maps
+### Heat Maps
 
 When searching the frame using the sliding window method, there are usually multiple detection per car. Furthermore, there are false positives that are detected on the guard rail and the vegetation along the side of the road. In order to improve the accuracy of tracking and removing false positives, the following strategies were adopted:
 
