@@ -1,4 +1,4 @@
-#Vehicle Detection and Tracking
+# Vehicle Detection and Tracking
 
 This repot for the vehicle detection and tracking project is divided into six different sections. An overview of the contents is provided below. In the first section, ***feature extraction*** procedure is described. In the second section, the methodology and steps for ***training*** a support vector machine (SVM) using normalized training feature and label data is discussed. In the third section, the ***sliding window*** implementation is discussed. In the same section, the philosophy of identifying the pixels corresponding the cars using ***heat maps*** is presented. In the fourth section, the strategy adopted for ***visualization*** is presented. In the final section, ***results*** and some discussion on potential improvements to the implementation are also discussed. The implementation of the code is presented in file *vehicle_detection_v2.py*.
 
@@ -6,7 +6,13 @@ This repot for the vehicle detection and tracking project is divided into six di
 
 ***Table of contents***
 
-[TOC]
+- [Feature Vector Extraction](#feature-vector-extraction)
+  - [A note on selection of colorspace](#a-note-on-selection-of-colorspace)
+- [Classifier Selection and Training](#classifier-selection-and-training)
+- [Sliding Window Search](#sliding-window-search)
+  - [Heat Maps](#heat-maps)
+- [Visualization and Video Implementation](#visualization-and-video-implementation)
+- [Discussion](#discussion)
 
 ---
 
@@ -27,16 +33,14 @@ Key steps performed in feature extraction pipeline are listed below. An overview
 * All these vectors are assembled adjacent to each other producing the input feature vector of size 2036. The feature vector is scaled for zero mean and unit variance using a `sklearn.preprocessing.StandardScaler()` before using it in the training or prediction process.
 
 
-
 ![feature_vector](./writeup_media/feature_vector.png)
-
 
 
 ## Classifier Selection and Training
 For the purpose of training and prediction using the feature vector described above, Support Vector Machines (SVM) was chosen as it has the best accuracy to computation cost ratio. As shown using the data from Kim *et. al.* in the below table, the SVM outperforms other methods, especially in the task classifying objects like cars, with a very high accuracy, precision and recall.
 
-![compare_knn_svm](./writeup_media/compare_knn_svm.png)
 
+![compare_knn_svm](./writeup_media/compare_knn_svm.png)
 
 
 For training the classified, the complete dataset of 17,760 points was used. The data is split into training and testing data using `sklearn.model_selection.train_test_split()` function with 80% to 20% split, respectively. The following table shows the performance of the trained SVM classifier. The subsequent table shows the confusion matrix, giving details on how accuracy, precision and recall were ascertained.
@@ -61,15 +65,12 @@ For training the classified, the complete dataset of 17,760 points was used. The
 | ***Totals***       | *1812*           | *1740*            | ***6552*** |
 
 
-
-##Sliding Window Search
+## Sliding Window Search
 
 The sliding window search methodology used to identify cars in each frame of the video is described. In order to improve computational efficiency, sliding window techniques was applied on *<u>two</u>* rows of scaled windows, that increased in size gradually. Since cars appear smaller in the frame near the horizon and larger when closer, such a scheme gave excellent computational advantage. The starting window size was chosen to be 64px by 64px, which was found to be ideal to identify cars that were a sufficiently safe distance from the car. Four additional window scaling factors were used: 1.25x, 1.5x, 1.75x, 2.0x. The sliding windows were parametrized by the overlap fraction, and location of each window was computed *apriori* using the function `sliding_window_list()` in the source file. This function takes the input video frame, region of interest and window overlap fraction as input arguments and return a list of all the overlapping windows at various scales. The following image illustrates some of the window sizes and highlights size of each window using a yellow box. The yellow box traverses across the width of the image and the two rows. As can be seen in the figure, the overlap to the next step along the width and height directions is 50%.
 
 
-
 ![sliding_windows](./writeup_media/sliding_windows.png)
-
 
 
 ###Heat Maps
@@ -85,30 +86,24 @@ When searching the frame using the sliding window method, there are usually mult
 The following figure illustrates the multiple detections and false positives, and subsequently processed using the above filtering steps to identify the final bounding box.
 
 
-
 ![heat_maps](./writeup_media/heat_maps.png)
 
 
-
-##Visualization and Video Implementation
+## Visualization and Video Implementation
 
 The following image shown a single frame from the visualization video. The visualization frame projects all key steps of the processing as described above. Feature detection using HoG, multiple detection, heat maps processing and final identification of bounding box for multiple cars is visualized in a single frame.
-
 
 
 ![visualization](./writeup_media/visualization.png)
 
 
-
 The detection and visualization for an example key sections of the project_video.mp4 frame is shown below. It can be seen that the pipeline described above is very effective in removing false positives and also detection multiple cars within a single frame.
-
 
 
 ![project_output](./writeup_media/project_output.gif)
 
 
-
-##Discussion
+## Discussion
 
 The vehicle detection project was a very interesting project to implement. It was very interesting to see the power to HOG features + SVM classification technique to detect cars. The process described in the lecture videos was adapted slightly - and parameter set was explore. Some of the key challenges encountered during the project are listed below. Also, improvement that can be done are also listed, and will be revisited in due course of time.  
 
